@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# 虚拟环境
+.venv/
+venv/
+
+# 本地敏感配置（数据库密码等）
+ems/local_settings.py
+.env
+
+# 编辑器
+.idea/
+.vscode/
+
+# 其他
+db.sqlite3
+*.log
+staticfiles/

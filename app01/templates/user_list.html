@@ -1,0 +1,77 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div style="margin-bottom: 15px;">
+        <a class="btn btn-success" href="/user/add/">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            新建用户
+        </a>
+        <a class="btn btn-success" href="/user/modelform/add/">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            新建用户ModelForm
+        </a>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+            用户列表
+        </div>
+        <div class="panel-body" style="padding: 10px 15px;">
+            <form method="get">
+                <div class="input-group" style="float: right; width: 300px;">
+                    <input type="text" name="q" class="form-control" placeholder="Search for..."
+                           value="{{ search_data }}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+            <div style="clear: both;"></div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>姓名</th>
+                <th>密码</th>
+                <th>年龄</th>
+                <th>账户余额</th>
+                <th>手机号</th>
+                <th>入职时间</th>
+                <th>性别</th>
+                <th>所属部门</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for obj in queryset %}
+                <tr>
+                    <td>{{ obj.id }}</td>
+                    <td>{{ obj.name }}</td>
+                    <td>{{ obj.password }}</td>
+                    <td>{{ obj.age }}</td>
+                    <td>{{ obj.account }}</td>
+                    <td>{{ obj.phone|default_if_none:"" }}</td>
+                    <td>{{ obj.create_time|date:"Y-m-d" }}</td>
+                    <td>{{ obj.get_gender_display }}</td>
+                    <td>{{ obj.depart.title }}</td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="/user/{{ obj.id }}/edit/">编辑</a>
+                        <a class="btn btn-danger btn-xs" href="/user/{{ obj.id }}/delete/">删除</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {# page_string 由分页类生成；搜索词 q 会被自动带进翻页链接 #}
+    <div class="clearfix">
+        <ul class="pagination">
+            {{ page_string }}
+        </ul>
+    </div>
+{% endblock %}
